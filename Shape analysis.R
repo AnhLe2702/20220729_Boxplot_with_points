@@ -2,22 +2,25 @@ library(ggplot2)
 library(dplyr)
 library(tidyverse)
 library(ggpubr)
-data <- read.csv(file.choose(), header = T)
-data
-data$Frame = as.factor(data$Frame)
 
-Average_area_10000 <- data$Average_area * 10000
+data <- read.csv(file.choose(), header = T) #Load the file to R
+data
+
+data$Frame = as.factor(data$Frame) #This step is needed because the column Frame was in the numeric format: 1, 2, 3 and R cannot distinguish this. So this has to be
+                                   #converted to factor aka categorical type.
+
+Average_area_10000 <- data$Average_area * 10000 #The area data was in cm^2 so this is to convert to um^2
 
 Average_area_plot <- ggplot(data, aes(x=Frame, y=Average_area_10000, fill=Type))+ 
-  geom_boxplot(aes(fill=Type), outlier.shape = NA)+
-  scale_fill_manual(values = c("orange", "steelblue"))+
-  geom_point(position=position_jitterdodge(), color="purple", size = 1.5, alpha = 0.5)+
-  coord_cartesian (ylim =c(0.025, 0.125))+
-  #facet_wrap(~Frame, ncol = 2, scales = "free_x")+
+  geom_boxplot(aes(fill=Type), outlier.shape = NA)+ #exclude plotting the outliers in the boxplot to make it looks nicer
+  scale_fill_manual(values = c("orange", "steelblue"))+ #allow to manually colour the boxplot separately
+  geom_point(position=position_jitterdodge(), color="purple", size = 1.5, alpha = 0.5)+ #allow to plot all datapoints for each boxplot per subgroup
+  coord_cartesian (ylim =c(0.025, 0.125))+ #manually set the ylimit axis to the desired scale
+  #facet_wrap(~Frame, ncol = 2, scales = "free_x")+ #this was to split each subgroup into separate plots
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
-               position = position_dodge(width = 0.75))
+               position = position_dodge(width = 0.75)) #plot the mean value as a darkred dot for each boxplot
 
-Average_area_plot_2 <- Average_area_plot + theme(axis.line.x.bottom = element_line(colour = "black", size = 0.5),
+Average_area_plot_2 <- Average_area_plot + theme(axis.line.x.bottom = element_line(colour = "black", size = 0.5), #set the axis 
                                                  axis.line.y.left = element_line(colour = "black", size = 0.5),
                                                  axis.title.x = element_text(size=10),
                                                  axis.title.y.left = element_text(size=10),
@@ -82,9 +85,9 @@ Solidity_plot_2 <- Solidity_plot + theme(axis.line.x.bottom = element_line(colou
 Solidity_plot_2
 
 data_59 <- subset(data, Frame == 59,
-                  select=c(Type, Average_area))
+                  select=c(Type, Average_area)) #this command subset out the data from Frame 59 only for the Average_area dataset based on Type (chopped vs intact)
 data_59
-wilcox.test(data_59$Average_area ~ data_59$Type)
+wilcox.test(data_59$Average_area ~ data_59$Type) #perform wilcox test for this subset data only
 
 data_79 <- subset(data, Frame == 79,
                   select=c(Type, Average_area))
