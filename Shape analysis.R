@@ -18,6 +18,7 @@ Average_area_plot <- ggplot(data, aes(x=Frame, y=Average_area_10000, fill=Type))
   #geom_point(aes(fill=Type, colour = Position_ID), position=position_jitterdodge(), size = 1.5, alpha = 0.5)+ #add aes(fill=Type, colour = Position_ID) in the geom_point
                                                                                                                #function to colour by Position_ID and the points align with the boxplot 
   coord_cartesian (ylim =c(0.025, 0.125))+ #manually set the ylimit axis to the desired scale
+  #scale_y_continuous(breaks = seq(0.025, 0.125, by=0.01), limits=c(0.025, 0.125))+ #Use this instead of coord_cartesian function to manually set the interval on the y axis
   #facet_wrap(~Frame, ncol = 2, scales = "free_x")+ #this was to split each subgroup into separate plots
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
                position = position_dodge(width = 0.75)) #plot the mean value as a darkred dot for each boxplot
