@@ -15,6 +15,8 @@ Average_area_plot <- ggplot(data, aes(x=Frame, y=Average_area_10000, fill=Type))
   geom_boxplot(aes(fill=Type), outlier.shape = NA)+ #exclude plotting the outliers in the boxplot to make it looks nicer
   scale_fill_manual(values = c("orange", "steelblue"))+ #allow to manually colour the boxplot separately
   geom_point(position=position_jitterdodge(), color="purple", size = 1.5, alpha = 0.5)+ #allow to plot all datapoints for each boxplot per subgroup
+  #geom_point(aes(fill=Type, colour = Position_ID), position=position_jitterdodge(), size = 1.5, alpha = 0.5)+ #add aes(fill=Type, colour = Position_ID) in the geom_point
+                                                                                                               #function to colour by Position_ID and the points align with the boxplot 
   coord_cartesian (ylim =c(0.025, 0.125))+ #manually set the ylimit axis to the desired scale
   #facet_wrap(~Frame, ncol = 2, scales = "free_x")+ #this was to split each subgroup into separate plots
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
