@@ -21,8 +21,9 @@ Average_area_plot <- ggplot(data, aes(x=Frame, y=Average_area_10000, fill=Type))
   #scale_y_continuous(breaks = seq(0.025, 0.125, by=0.01), limits=c(0.025, 0.125))+ #Use this instead of coord_cartesian function to manually set the interval on the y axis
   #facet_wrap(~Frame, ncol = 2, scales = "free_x")+ #this was to split each subgroup into separate plots
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
-               position = position_dodge(width = 0.75)) #plot the mean value as a darkred dot for each boxplot
-
+               position = position_dodge(width = 0.75))+ #plot the mean value as a darkred dot for each boxplot
+   stat_summary(fun = mean, geom="line", aes(group = Type), colour="darkred", size=0.5,
+               position = position_dodge(width = 0.75)) #plot a line goes through the mean value of each boxplot according to Type
 Average_area_plot_2 <- Average_area_plot + theme(axis.line.x.bottom = element_line(colour = "black", size = 0.5), #set the axis 
                                                  axis.line.y.left = element_line(colour = "black", size = 0.5),
                                                  axis.title.x = element_text(size=10),
@@ -40,6 +41,8 @@ Average_Perimeter_10000_plot <- ggplot(data, aes(x=Frame, y=Average_Perimeter_10
   coord_cartesian (ylim =c(50, 200))+
   #facet_wrap(~Frame, ncol = 2, scales = "free_x")+
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
+               position = position_dodge(width = 0.75))+
+  stat_summary(fun = mean, geom="line", aes(group = Type), colour="darkred", size=0.5,
                position = position_dodge(width = 0.75))
 
 Average_Perimeter_10000_plot_2 <- Average_Perimeter_10000_plot + theme(axis.line.x.bottom = element_line(colour = "black", size = 0.5),
@@ -58,6 +61,8 @@ Average_Circularity_plot <- ggplot(data, aes(x=Frame, y=Average_Circularity, fil
   coord_cartesian (ylim =c(0.25, 1))+
   #facet_wrap(~Frame, ncol = 2, scales = "free_x")+
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
+               position = position_dodge(width = 0.75))+
+  stat_summary(fun = mean, geom="line", aes(group = Type), colour="darkred", size=0.5,
                position = position_dodge(width = 0.75))
 
 Average_Circularity_plot_2 <- Average_Circularity_plot + theme(axis.line.x.bottom = element_line(colour = "black", size = 0.5),
@@ -76,6 +81,8 @@ Solidity_plot <- ggplot(data, aes(x=Frame, y=Solidity, fill=Type))+
   coord_cartesian (ylim =c(0.6, 1))+
   #facet_wrap(~Frame, ncol = 2, scales = "free_x")+
   stat_summary(fun = mean, geom="point", colour="darkred", size=2,
+               position = position_dodge(width = 0.75))+
+  stat_summary(fun = mean, geom="line", aes(group = Type), colour="darkred", size=0.5,
                position = position_dodge(width = 0.75))
 
 Solidity_plot_2 <- Solidity_plot + theme(axis.line.x.bottom = element_line(colour = "black", size = 0.5),
