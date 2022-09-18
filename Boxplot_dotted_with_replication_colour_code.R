@@ -10,12 +10,12 @@ data$Frame = as.factor(data$Frame)
 data$Cell_ID = as.factor(data$Cell_ID)
 
 Average_area_plot <- ggplot(data = data) +
-  geom_boxplot(position=position_dodge(0.75), aes(x=Frame, y=Area_um_2, fill = Type), outlier.shape = NA, width = 0.75) + 
+  geom_boxplot(position=position_dodge(0.75), aes(x=Frame, y=Area_um_2, fill = Type), outlier.shape = NA, width = 0.75) + #Redefine aes for each plot, fill = Type specifies the filled colour according to the Type: compressed vs uncompressed
   scale_fill_manual(values = c("orange", "steelblue"))+
-  geom_point(aes(x = Frame, y=Area_um_2, group = Type, color =Replicate), size =1.2, alpha = 0.5, position = position_jitterdodge(0.2))+
+  geom_point(aes(x = Frame, y=Area_um_2, group = Type, color =Replicate), size =1.2, alpha = 0.5, position = position_jitterdodge(0.2))+ #position_jitterdodge() allows to both dodge the datapoint and allign them with the boxplot and also jitter the data points
   scale_color_manual(values = c("mediumorchid", "green4"))+
   scale_y_continuous(breaks = seq(0, 4000, by=500), limits=c(0,4000))+
-  stat_summary(fun = mean, geom="point", colour="darkred", aes(x=Frame, y=Area_um_2, fill=Type), size=2,
+  stat_summary(fun = mean, geom="point", colour="darkred", aes(x=Frame, y=Area_um_2, fill=Type), size=2, #Because we didn't define aes in the first ggplot() command, we will have to define aes here for stat_summary
                position = position_dodge(width = 0.75))+
   stat_summary(fun = mean, geom="line", colour="darkred", aes(x=Frame, y=Area_um_2, group = Type), size=0.5,
                position = position_dodge(width = 0.75))
